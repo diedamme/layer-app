@@ -17,7 +17,7 @@
       </vl-layer-tile>
 
       <vl-layer-vector>
-        <vl-source-vector :features="features"></vl-source-vector>
+        <vl-source-vector :features="setFeatures()"></vl-source-vector>
 
         <vl-style-box>
           <vl-style-fill color="white"></vl-style-fill>
@@ -45,20 +45,33 @@ export default {
   data() {
     return {
       zoom: 17,
-      center: [12.492442, 41.89017],
+      center: [],
       rotation: 0,
       geolocPosition: undefined,
-      features: [
-        {
+      features: [],
+      carList: this.$store.state.carList,
+    };
+  },
+  mounted() {},
+  methods: {
+    setFeatures() {
+      this.features = this.carList.map((i) => {
+        return {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [12.492442, 41.89017],
+            coordinates: [i.longitude, i.latitude],
           },
-          properties: {},
-        },
-      ],
-    };
+        };
+      });
+      return this.features;
+    },
+    getCenter() {
+      this.center = [
+        this.state?.activeCar.longitude,
+        this.state?.activeCar.latitude,
+      ];
+    },
   },
 };
 </script>
