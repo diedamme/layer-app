@@ -10,7 +10,12 @@
         />
       </div>
       <div class="car__list" v-if="carView.length > 0">
-        <div class="car__item" v-for="car in carView" v-bind:key="car.id">
+        <div
+          class="car__item"
+          v-for="car in carView"
+          v-bind:key="car.id"
+          @click="onClickCar(car)"
+        >
           <img src="@/assets/img/car.svg" alt="" />
           <span class="car__item-name">{{ car.name }}</span>
         </div>
@@ -37,15 +42,17 @@ export default {
       )
       .then((response) => {
         this.carList = this.carView = response.data;
-        this.carView;
+        this.$emit("getCarList", response.data);
       });
   },
   methods: {
     getSearch(event) {
-      console.log(event.target.value);
       this.carView = this.carList.filter((car) =>
         car.name.toLowerCase().includes(event.target.value.toLowerCase())
       );
+    },
+    onClickCar(car) {
+      this.$emit("onClickCar", car);
     },
   },
 };
