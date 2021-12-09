@@ -10,12 +10,7 @@
         />
       </div>
       <div class="car__list" v-if="carView.length > 0">
-        <div
-          class="car__item"
-          v-for="car in carView"
-          v-bind:key="car.id"
-          v-on:click="getCoordinates(car)"
-        >
+        <div class="car__item" v-for="car in carView" v-bind:key="car.id">
           <img src="@/assets/img/car.svg" alt="" />
           <span class="car__item-name">{{ car.name }}</span>
         </div>
@@ -42,20 +37,15 @@ export default {
       )
       .then((response) => {
         this.carList = this.carView = response.data;
-        this.$store.commit("setCarList", response.data);
-        this.$store.commit("setActiveCar", response.data[0]);
+        this.carView;
       });
   },
   methods: {
     getSearch(event) {
+      console.log(event.target.value);
       this.carView = this.carList.filter((car) =>
         car.name.toLowerCase().includes(event.target.value.toLowerCase())
       );
-    },
-    getCoordinates(car) {
-      console.log(car);
-      this.$store.commit("setActiveCar", car);
-      this.$store.commit("setActiveCar", car);
     },
   },
 };
