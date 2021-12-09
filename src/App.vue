@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Layer />
-    <Cars />
+    <Layer ref="layerComponent" />
+    <Cars @onClickCar="onClickCar" @getCarList="getCarList" />
   </div>
 </template>
 
@@ -14,6 +14,19 @@ export default {
   components: {
     Layer,
     Cars,
+  },
+  data() {
+    return {
+      activeCard: null,
+    };
+  },
+  methods: {
+    onClickCar(car) {
+      this.$refs.layerComponent.onActiveCard(car);
+    },
+    getCarList(cars) {
+      this.$refs.layerComponent.setPointsCars(cars);
+    },
   },
 };
 </script>

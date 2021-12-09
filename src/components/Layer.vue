@@ -42,23 +42,31 @@ Vue.use(VueLayers);
 
 export default {
   name: "Layer",
+
   data() {
     return {
       zoom: 17,
       center: [12.492442, 41.89017],
       rotation: 0,
       geolocPosition: undefined,
-      features: [
-        {
+      features: [],
+    };
+  },
+  methods: {
+    onActiveCard(car) {
+      this.center = [car.longitude, car.latitude];
+    },
+    setPointsCars(cars) {
+      this.features = cars.map((car) => {
+        return {
           type: "Feature",
           geometry: {
             type: "Point",
-            coordinates: [12.492442, 41.89017],
+            coordinates: [car.longitude, car.latitude],
           },
-          properties: {},
-        },
-      ],
-    };
+        };
+      });
+    },
   },
 };
 </script>
