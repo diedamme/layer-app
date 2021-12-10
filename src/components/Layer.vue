@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       zoom: 17,
-      center: [12.492442, 41.89017],
+      center: [],
       rotation: 0,
       geolocPosition: undefined,
       features: [],
@@ -55,6 +55,7 @@ export default {
   methods: {
     onActiveCard(car) {
       this.center = [car.longitude, car.latitude];
+      this.zoom = 17;
     },
     setPointsCars(cars) {
       this.features = cars.map((car) => {

@@ -12,9 +12,10 @@
       <div class="car__list" v-if="carView.length > 0">
         <div
           class="car__item"
-          v-for="car in carView"
+          :class="{ active: activeCarIndex == index }"
+          v-for="(car, index) in carView"
           v-bind:key="car.id"
-          @click="onClickCar(car)"
+          @click="onClickCar(car, index)"
         >
           <img src="@/assets/img/car.svg" alt="" />
           <span class="car__item-name">{{ car.name }}</span>
@@ -33,6 +34,7 @@ export default {
     return {
       carList: [],
       carView: [],
+      activeCarIndex: 0,
     };
   },
   mounted() {
@@ -47,11 +49,13 @@ export default {
   },
   methods: {
     getSearch(event) {
+      this.activeCarIndex = null;
       this.carView = this.carList.filter((car) =>
         car.name.toLowerCase().includes(event.target.value.toLowerCase())
       );
     },
-    onClickCar(car) {
+    onClickCar(car, index) {
+      this.activeCarIndex = index;
       this.$emit("onClickCar", car);
     },
   },
@@ -85,16 +89,26 @@ export default {
   img {
     margin-left: 20px;
   }
-  .car__item {
-    border-bottom: 1px solid #ededed;
-    padding: 10px 0;
 
-    &-name {
-      padding-left: 10px;
+  .car {
+    &__list {
+      margin-top: 5px;
     }
-    &:hover {
-      background-color: rgb(238, 238, 238);
-      cursor: pointer;
+    &__item {
+      border-bottom: 1px solid #ededed;
+      padding: 10px 0;
+
+      &.active {
+        background-color: rgb(238, 238, 238);
+      }
+
+      &-name {
+        padding-left: 10px;
+      }
+      &:hover {
+        background-color: rgb(238, 238, 238);
+        cursor: pointer;
+      }
     }
   }
   .empty-list {
