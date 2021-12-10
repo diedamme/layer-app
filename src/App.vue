@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       activeCard: null,
+      initCoordinates: null,
     };
   },
   methods: {
@@ -25,6 +26,7 @@ export default {
       this.$refs.layerComponent.onActiveCard(car);
     },
     getCarList(cars) {
+      this.$refs.layerComponent.onActiveCard(cars[0]);
       this.$refs.layerComponent.setPointsCars(cars);
     },
   },
